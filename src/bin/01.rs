@@ -1,9 +1,9 @@
 use nom::{
-    IResult,
     branch::alt,
     character::complete::{char, digit1},
     combinator::{map_res, value},
     multi::separated_list0,
+    IResult,
 };
 use std::str::FromStr;
 
@@ -59,12 +59,8 @@ pub fn part_two(input: &str) -> Option<u64> {
         let prev_pos = pos;
         pos = apply_rotation(pos, instr);
         println!("Rotate {} from {} to {}", instr, prev_pos, pos);
-        if ((prev_pos - pos) * instr.signum() > 0) {
+        if (((prev_pos - pos) * instr.signum() > 0) || pos == 0) && prev_pos != 0 {
             println!("Hit zero during that");
-            zeroes_hit += 1;
-        }
-        if pos == 0 {
-            println!("Also landed on zero");
             zeroes_hit += 1;
         }
         println!("And also got {} full spins", instr.abs().div_euclid(100));
